@@ -18,6 +18,4 @@ function New-ZIAccessToken {
 
     #Create access token file
     $accessToken | ConvertTo-SecureString -AsPlainText | Export-Clixml $accessTokenPath
-    #Output new access token
-    $accessToken
 }
