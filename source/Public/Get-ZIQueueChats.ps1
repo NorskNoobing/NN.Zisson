@@ -8,7 +8,7 @@ function Get-ZIQueueChats {
         "Method" = "GET"
         "Uri" = "$(Get-ZiEndpoint)/api/simple/QueueChats"
         "Headers" = @{
-            "Authorization" = "Basic $(Get-ZIAccessToken)"
+            "Authorization" = "Basic $(Get-ZiAccessToken)"
         }
         "Body" = @{
             "start_date" = $startDate

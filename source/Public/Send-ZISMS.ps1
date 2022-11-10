@@ -10,7 +10,7 @@ function Send-ZISMS {
         "Method" = "POST"
         "Uri" = "$(Get-ZiEndpoint)/api/simple/SendSms"
         "Headers" = @{
-            "Authorization" = "Basic $(Get-ZIAccessToken)"
+            "Authorization" = "Basic $(Get-ZiAccessToken)"
         }
         "Body" = @{
             "sender_number" = $senderNumber

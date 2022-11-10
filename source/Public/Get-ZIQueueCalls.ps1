@@ -9,7 +9,7 @@ function Get-ZIQueueCalls {
         "Method" = "GET"
         "Uri" = "$(Get-ZiEndpoint)/api/simple/QueueCallsAll"
         "Headers" = @{
-            "Authorization" = "Basic $(Get-ZIAccessToken)"
+            "Authorization" = "Basic $(Get-ZiAccessToken)"
         }
         "Body" = @{
             "start_date" = $startDate

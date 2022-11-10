@@ -8,7 +8,7 @@ function Get-ZIQueueStatus {
         "Method" = "GET"
         "Uri" = "$(Get-ZiEndpoint)/api/simple/QueueStatus"
         "Headers" = @{
-            "Authorization" = "Basic $(Get-ZIAccessToken)"
+            "Authorization" = "Basic $(Get-ZiAccessToken)"
         }
         "Body" = @{
             "queue_name" = $queueName
