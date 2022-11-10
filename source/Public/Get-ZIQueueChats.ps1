@@ -1,13 +1,12 @@
 function Get-ZIQueueChats {
     param (
-        [Parameter(Mandatory)][ValidateSet("https://api.zisson.com","https://api.zisson.no")][string]$endpoint,
         [Parameter(Mandatory)][datetime]$startDate,
         [Parameter(Mandatory)][datetime]$endDate
     )
 
     $splat = @{
         "Method" = "GET"
-        "Uri" = "$endpoint/api/simple/QueueChats"
+        "Uri" = "$(Get-ZiEndpoint)/api/simple/QueueChats"
         "Headers" = @{
             "Authorization" = "Basic $(Get-ZIAccessToken)"
         }

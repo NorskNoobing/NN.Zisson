@@ -8,7 +8,7 @@ function New-ZIAccessToken {
 
     if (!(Test-Path $accessTokenPath)) {
         #Create parent folders of the access token file 
-        mkdir -p $accessTokenPath.Substring(0, $accessTokenPath.lastIndexOf('\')) | Out-Null
+        $null = mkdir -p $accessTokenPath.Substring(0, $accessTokenPath.lastIndexOf('\'))
     }
     
     #Encode credentials to Base64

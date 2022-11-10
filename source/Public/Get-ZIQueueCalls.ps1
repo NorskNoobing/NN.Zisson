@@ -1,6 +1,5 @@
 function Get-ZIQueueCalls {
     param (
-        [Parameter(Mandatory)][ValidateSet("https://api.zisson.com","https://api.zisson.no")][string]$endpoint,
         [Parameter(Mandatory)][datetime]$startDate,
         [Parameter(Mandatory)][datetime]$endDate,
         [int]$queueList
@@ -8,7 +7,7 @@ function Get-ZIQueueCalls {
 
     $splat = @{
         "Method" = "GET"
-        "Uri" = "$endpoint/api/simple/QueueCallsAll"
+        "Uri" = "$(Get-ZiEndpoint)/api/simple/QueueCallsAll"
         "Headers" = @{
             "Authorization" = "Basic $(Get-ZIAccessToken)"
         }

@@ -1,13 +1,12 @@
 function Get-ZIQueueStatus {
     param (
-        [Parameter(Mandatory)][ValidateSet("https://api.zisson.com","https://api.zisson.no")][string]$endpoint,
         [string]$queueName,
         [string]$queueType
     )
 
     $splat = @{
         "Method" = "GET"
-        "Uri" = "$endpoint/api/simple/QueueStatus"
+        "Uri" = "$(Get-ZiEndpoint)/api/simple/QueueStatus"
         "Headers" = @{
             "Authorization" = "Basic $(Get-ZIAccessToken)"
         }
