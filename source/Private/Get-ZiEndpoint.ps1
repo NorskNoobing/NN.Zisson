@@ -5,6 +5,10 @@ function Get-ZiEndpoint {
     )
 
     process {
+        if (!(Test-Path $EndpointPath)) {
+            New-ZiEndpoint
+        }
+
         Import-Clixml $EndpointPath
     }
 }
