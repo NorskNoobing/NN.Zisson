@@ -6,9 +6,10 @@ function New-ZIAccessToken {
     $username = Read-Host "Enter API username"
     $passwd = Read-Host -AsSecureString "Enter API password"
 
-    if (!(Test-Path $accessTokenPath)) {
-        #Create parent folders of the access token file 
-        $null = mkdir -p $accessTokenPath.Substring(0, $accessTokenPath.lastIndexOf('\'))
+    $accessTokenDir = $accessTokenPath.Substring(0, $accessTokenPath.lastIndexOf('\'))
+    if (!(Test-Path $accessTokenDir)) {
+        #Create parent folders of the access token file
+        $null = New-Item -ItemType Directory $accessTokenDir
     }
     
     #Encode credentials to Base64
