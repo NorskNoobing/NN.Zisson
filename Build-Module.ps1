@@ -13,7 +13,7 @@ $manifestSplat = @{
     "PowerShellVersion" = $PSversion
     "Tags" = $tags
     "ReleaseNotes" = $releaseNotes
-    "Path" = ".\source\$moduleName.psd1"
+    "Path" = "$PSScriptRoot\source\$moduleName.psd1"
     "RootModule" = "$moduleName.psm1"
     "Author" = $author
     "ProjectUri" = $ProjectUri
@@ -21,7 +21,7 @@ $manifestSplat = @{
 New-ModuleManifest @manifestSplat
 
 $buildSplat = @{
-    "SourcePath" = ".\source\$moduleName.psd1"
+    "SourcePath" = "$PSScriptRoot\source\$moduleName.psd1"
     "Version" = $version
 }
 Build-Module @buildSplat
