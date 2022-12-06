@@ -1,10 +1,18 @@
 function New-ZIAccessToken {
     param (
         [string]$accessTokenPath = "$env:USERPROFILE\.creds\Zisson\zissonAccessToken.xml"
+
     )
 
     $username = Read-Host "Enter Zisson API username"
-    $passwd = Read-Host -AsSecureString "Enter Zisson API password"
+    if (!$username) {
+        Write-Error "Please provide a Zisson API username." -ErrorAction Stop
+    }
+
+    $passwd = Read-Host "Enter Zisson API password"
+    if (!$passwd) {
+        Write-Error "Please provide a Zisson API password." -ErrorAction Stop
+    }
 
     $accessTokenDir = $accessTokenPath.Substring(0, $accessTokenPath.lastIndexOf('\'))
     if (!(Test-Path $accessTokenDir)) {
@@ -13,7 +21,7 @@ function New-ZIAccessToken {
     }
     
     #Encode credentials to Base64
-    $text = "$($username):$($passwd | ConvertFrom-SecureString -AsPlainText)"
+    $text = "$($username):$($passwd)"
     $bytes = [Text.Encoding]::UTF8.GetBytes($text)
     $accessToken = [Convert]::ToBase64String($bytes)
 
