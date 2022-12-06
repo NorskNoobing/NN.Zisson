@@ -3,8 +3,8 @@ function New-ZIAccessToken {
         [string]$accessTokenPath = "$env:USERPROFILE\.creds\Zisson\zissonAccessToken.xml"
     )
 
-    $username = Read-Host "Enter API username"
-    $passwd = Read-Host -AsSecureString "Enter API password"
+    $username = Read-Host "Enter Zisson API username"
+    $passwd = Read-Host -AsSecureString "Enter Zisson API password"
 
     $accessTokenDir = $accessTokenPath.Substring(0, $accessTokenPath.lastIndexOf('\'))
     if (!(Test-Path $accessTokenDir)) {
