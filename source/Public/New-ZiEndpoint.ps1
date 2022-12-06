@@ -1,20 +1,17 @@
 function New-ZiEndpoint {
     [CmdletBinding()]
     param (
+        [Parameter(Mandatory,HelpMessage="Enter your Zisson domain suffix (no/com)")][ValidateSet("com","no")][string]$DomainSuffix,
         [string]$EndpointPath = "$env:USERPROFILE\.creds\Zisson\zissonEndpoint.xml"
     )
 
     process {
-        $DomainSuffix = Read-Host "Enter your Zisson domain suffix (no/com)"
         switch ($DomainSuffix) {
             no {
                 $Endpoint = "https://api.zisson.no"
             }
             com {
                 $Endpoint = "https://api.zisson.com"
-            }
-            Default {
-                Write-Error "Domain suffix was set to `"$DomainSuffix`". Please enter either `"no`" or `"com`"" -ErrorAction Stop
             }
         }
 
