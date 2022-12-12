@@ -1,4 +1,4 @@
-function Get-ZIQueueCalls {
+function Get-ZiQueueCalls {
     param (
         [Parameter(Mandatory)][datetime]$startDate,
         [Parameter(Mandatory)][datetime]$endDate,
@@ -17,5 +17,6 @@ function Get-ZIQueueCalls {
             "queue_list" = $queueList
         }
     }
-    Invoke-RestMethod @splat
+    $result = Invoke-RestMethod @splat
+    $result.QueueCallsAll
 }

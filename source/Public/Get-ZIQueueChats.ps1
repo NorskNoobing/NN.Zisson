@@ -1,4 +1,4 @@
-function Get-ZIQueueChats {
+function Get-ZiQueueChats {
     param (
         [Parameter(Mandatory)][datetime]$startDate,
         [Parameter(Mandatory)][datetime]$endDate
@@ -15,5 +15,6 @@ function Get-ZIQueueChats {
             "end_date"  = $endDate
         }
     }
-    Invoke-RestMethod @splat
+    $result = Invoke-RestMethod @splat
+    $result.QueueChats
 }
