@@ -1,4 +1,4 @@
-function Send-ZISMS {
+function Send-ZiSMS {
     param (
         [Parameter(Mandatory)][string]$message,
         [Parameter(Mandatory)][string]$recipients,

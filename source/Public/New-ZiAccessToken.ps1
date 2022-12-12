@@ -1,4 +1,4 @@
-function New-ZIAccessToken {
+function New-ZiAccessToken {
     param (
         [string]$accessTokenPath = "$env:USERPROFILE\.creds\Zisson\zissonAccessToken.xml"
 
