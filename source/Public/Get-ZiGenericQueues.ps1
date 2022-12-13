@@ -1,4 +1,4 @@
-function Get-ZiQueues {
+function Get-ZiGenericQueues {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory)][string]$CustomerGuid, 
