@@ -1,10 +1,9 @@
 function New-ZiAccessToken {
     [CmdletBinding()]
     param (
-        $AccessTokenPath = "$env:USERPROFILE\.creds\Zisson\ZissonAccessToken.xml",
-        $ApiKeyIdPath = "$env:USERPROFILE\.creds\Zisson\ZissonApiKeyId.xml",
-        $RefreshTokenPath = "$env:USERPROFILE\.creds\Zisson\ZissonRefreshToken.xml",
-        $CustomerGuidPath = "$env:USERPROFILE\.creds\Zisson\ZissonCustomerGuid.xml"
+        [int]$TokenTtl = "60",
+        [string]$AccessTokenPath = "$env:USERPROFILE\.creds\Zisson\app2\ZissonAccessToken.xml",
+        [string]$LatestJwtPath = "$env:USERPROFILE\.creds\Zisson\app2\ZissonLatestJwt.xml"
     )
 
     process {
@@ -15,43 +14,36 @@ function New-ZiAccessToken {
         }
 
         #Create ApiKeyId file
-        if (!(Test-Path $ApiKeyIdPath)) {
-            while (!$ApiKeyId) {
-                $ApiKeyId = Read-Host "Enter Zisson ApiKeyId"
+        if (!(Test-Path $LatestJwtPath)) {
+            while (!$LatestJwt) {
+                $LatestJwt = Read-Host "Enter Zisson latest JWT object"
             }
-            $ApiKeyId | ConvertTo-SecureString -AsPlainText | Export-Clixml $ApiKeyIdPath
+            $LatestJwt | ConvertTo-SecureString -AsPlainText | Export-Clixml $LatestJwtPath
         }
 
-        #Create RefreshToken file
-        if (!(Test-Path $RefreshTokenPath)) {
-            while (!$RefreshToken) {
-                $RefreshToken = Read-Host "Enter Zisson RefreshToken"
-            }
-            $RefreshToken | ConvertTo-SecureString -AsPlainText | Export-Clixml $RefreshTokenPath
-        }
-
-        #Create CustomerGuid file
-        if (!(Test-Path $CustomerGuidPath)) {
-            while (!$CustomerGuid) {
-                $CustomerGuid = Read-Host "Enter Zisson CustomerGuid"
-            }
-            $CustomerGuid | ConvertTo-SecureString -AsPlainText | Export-Clixml $CustomerGuidPath
-        }
+        $LatestJwt = Import-Clixml $LatestJwtPath | ConvertFrom-SecureString -AsPlainText | ConvertFrom-Json
 
         #Request new accesstoken
         $splat = @{
             "Method" = "POST"
             "Uri" = "https://app2.zisson.com/web-api/v1/authenticate/refresh-token"
             "Header" = @{
-                "Accept" = "text/plain"
-                "Content-Type" = "application/json-patch+json"
+                "Accept" = "application/json"
+                "Content-Type" = "application/json"
             }
             "Body" = @{
-                "id" = Import-Clixml $ApiKeyIdPath | ConvertFrom-SecureString -AsPlainText
-                "customerGuid" = Import-Clixml $CustomerGuidPath | ConvertFrom-SecureString -AsPlainText
-                "refreshToken" = Import-Clixml $RefreshTokenPath | ConvertFrom-SecureString -AsPlainText
-            }
+                "id" = $LatestJwt.id
+                "customerGuid" = $LatestJwt.customerGuid
+                "refreshToken" = $LatestJwt.refreshToken
+            } | ConvertTo-Json
         }
-        Invoke-RestMethod @splat
+        $Result = Invoke-RestMethod @splat
+        
+
+        #Set up output
+        @{
+            "access_token" = $Result.jwt | ConvertTo-SecureString -AsPlainText
+            "expiry_date" = (Get-Date).AddMinutes($TokenTtl)
+        } | Export-Clixml -Path $AccessTokenPath
     }
 }
